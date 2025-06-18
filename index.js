@@ -48,10 +48,19 @@ function fillWithEmojis(total = 40) {
     const div = document.createElement("div");
     div.className = "animal";
     div.textContent = emoji;
+
+    if (emoji === "🐘") {
+      div.style.cursor = "pointer";
+      div.addEventListener("click", () => {
+        document.getElementById("game-screen-one").style.display = "none";
+        document.getElementById("game-screen-two").style.display = "block";
+      });
+    }
+
     container.appendChild(div);
   });
 }
 
 function startGame() {
-  fillWithEmojis(4000);
+  fillWithEmojis(40);
 }
