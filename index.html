@@ -14,8 +14,8 @@
       </div>
     </div>
     <div id="game-points">
-      <p id="points"> Points: 0</p>
-      <p id="lives"> Lives: 4</p>
+      <p id="points">Points: 0</p>
+      <p id="lives">Lives: 4</p>
     </div>
     <div id="game-screen-one">
       <h1>Find the elephant 🐘</h1>
@@ -23,31 +23,58 @@
     </div>
     <div id="game-screen-two">
       <h2>🔒 Enter the secret code to unlock the box</h2>
-      <input id="code-input" type="text" maxlength="4" placeholder="4-digit code" />
+      <input
+        id="code-input"
+        type="text"
+        maxlength="4"
+        placeholder="4-digit code"
+      />
       <button id="submit-code">Unlock</button>
       <p id="code-feedback"></p>
     </div>
-    <div id="game-screen-three" class="game-screen" style="display: none;">
+    <div id="game-screen-three" class="game-screen" style="display: none">
       <h2>🧠 Memorize the Color Sequence</h2>
-  <!-- Display the sequence here -->
-  <div id="color-sequence" class="sequence-display">
-    <!-- JS will flash colors here -->
-  </div>
-  <p id="sequence-instruction">Watch the sequence, then repeat it in the same order!</p>
-  <!-- User's input buttons -->
-  <div id="color-buttons" class="button-group">
-    <button class="color-btn" data-color="red" style="background: red;" aria-label="Red-button"></button>
-    <button class="color-btn" data-color="blue" style="background: blue;" aria-label="blue-button"></button>
-    <button class="color-btn" data-color="green" style="background: green;" aria-label="green-button"></button>
-    <button class="color-btn" data-color="yellow" style="background: yellow;" aria-label="yellow-button"></button>
-  </div>
-  
-  <!-- Feedback -->
-  <p id="sequence-feedback"></p>
+      <!-- Display the sequence here -->
+      <div id="color-sequence" class="sequence-display">
+        <!-- JS will flash colors here -->
+      </div>
+      <p id="sequence-instruction">
+        Watch the sequence, then repeat it in the same order!
+      </p>
+      <!-- User's input buttons -->
+      <div id="color-buttons" class="button-group">
+        <button
+          class="color-btn"
+          data-color="red"
+          style="background: red"
+          aria-label="Red-button"
+        ></button>
+        <button
+          class="color-btn"
+          data-color="blue"
+          style="background: blue"
+          aria-label="blue-button"
+        ></button>
+        <button
+          class="color-btn"
+          data-color="green"
+          style="background: green"
+          aria-label="green-button"
+        ></button>
+        <button
+          class="color-btn"
+          data-color="yellow"
+          style="background: yellow"
+          aria-label="yellow-button"
+        ></button>
+      </div>
+      <div id="game-screen-four"></div>
+
+      <!-- Feedback -->
+      <p id="sequence-feedback"></p>
     </div>
     <div id="game-screen-four"></div>
     <div id="game-screen-five"></div>
     <script src="index.js"></script>
   </body>
 </html>
-

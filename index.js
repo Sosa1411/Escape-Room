@@ -83,8 +83,6 @@ function fillWithEmojis(total = 40) {
   });
 }
 
-
-
 // now after user complated the page one now its time for page 2
 // on the page two
 // fisrt we need to get the id of input, submit btn and paragraph id
@@ -101,16 +99,17 @@ function goToPuzzelTwo() {
   const feedBack = document.getElementById("code-feedback");
   const rightCode = "2123";
   submitBtn.addEventListener("click", () => {
-    const userGuss = inputId.value;
-    if (userGuss === rightCode) {
+    const userGuess = inputId.value;
+    if (userGuess === rightCode) {
       feedBack.textContent = "✅ Correct!";
       feedBack.style.color = "green";
       points += 10;
       updatedStats();
       setTimeout(() => {
         gameScreenTwo.style.display = "none";
-        gameScreenThree.style.display = "flex"
-      }, 1500);
+        gameScreenThree.style.display = "flex";
+        goToPuzzelThree();
+      }, 25);
     } else {
       feedBack.textContent = "❌ Wrong code, try again!";
       feedBack.style.color = "red";
@@ -120,8 +119,8 @@ function goToPuzzelTwo() {
 }
 
 function goToPuzzelThree() {
-  gameScreenOne.style.display = "none"
-  gameScreenTwo.style.display = "none"
+  gameScreenOne.style.display = "none";
+  gameScreenTwo.style.display = "none";
   const colors = ["red", "green", "blue", "yellow"];
   const btn = document.querySelectorAll(".color-btn");
   const sequence = [];
@@ -135,18 +134,18 @@ function goToPuzzelThree() {
   btn.forEach((b) => (b.disabled = true));
   sequence.forEach((color, index) => {
     setTimeout(() => {
-      let button = document.querySelector(`.color-btn[data-color ="${color}"]`)
-      if (!button){
-        console.error("Button not found for color:", color)
+      let button = document.querySelector(`.color-btn[data-color ="${color}"]`);
+      if (!button) {
+        console.error("Button not found for color:", color);
       }
-      console.log("flashing", color, button)
-      button.classList.add("flash")
+      console.log("flashing", color, button);
+      button.classList.add("flash");
       console.log("flashing:", color, button);
 
       setTimeout(() => {
-        button.classList.remove("flash")
-      }, 800); // how long it stays visible
-    }, index * 1200); // how long to wait before next flash
+        button.classList.remove("flash");
+      }, 2000); // how long it stays visible
+    }, index * 1000); // how long to wait before next flash
   });
   setTimeout(() => {
     display.textContent = "Your turn! Repeat the sequence.";
@@ -181,12 +180,13 @@ function goToPuzzelThree() {
   console.log("👀 Full color sequence to win:", sequence);
 }
 
-goToPuzzelThree()
-startButton.addEventListener("click", () => {
-  startScreen.style.display = "none";
-  gameScreenOne.style.display = "flex";
-  gameScreenOne.style.opacity = "1";
-  gameScreenOne.style.pointerEvents = "auto";
-  fillWithEmojis(40);
-  updatedStats();
+document.addEventListener("DOMContentLoaded", () => {
+  startButton.addEventListener("click", () => {
+    startScreen.style.display = "none";
+    gameScreenOne.style.display = "flex";
+    gameScreenOne.style.opacity = "1";
+    gameScreenOne.style.pointerEvents = "auto";
+    fillWithEmojis(40);
+    updatedStats();
+  });
 });
