@@ -67,13 +67,33 @@
           style="background: yellow"
           aria-label="yellow-button"
         ></button>
+        <button
+          class="color-btn"
+          data-color="yellow"
+          style="background: rgb(100, 47, 59)"
+          aria-label="yellow-button"
+        ></button>
+        <button
+          class="color-btn"
+          data-color="yellow"
+          style="background: rgb(0, 255, 242)"
+          aria-label="yellow-button"
+        ></button>
       </div>
-      <div id="game-screen-four"></div>
-
       <!-- Feedback -->
       <p id="sequence-feedback"></p>
     </div>
-    <div id="game-screen-four"></div>
+    
+    <div id="game-screen-four" style="display: none;">
+      <h2 class="riddle-title">🧩 Riddle Challenge</h2>
+      <div id="riddle-box">
+    <p id="riddle-question">Riddle will appear here...</p>
+    <input type="text" id="riddle-answer" placeholder="Type your answer..." />
+    <button id="submit-riddle-answer">Submit Answer</button>
+    <p id="riddle-feedback"></p>
+    <p id="riddle-progress">Riddle <span id="riddle-count">1</span>/5</p>
+    </div>
+    </div>
     <div id="game-screen-five"></div>
     <script src="index.js"></script>
   </body>

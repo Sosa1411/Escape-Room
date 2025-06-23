@@ -82,6 +82,16 @@ function fillWithEmojis(total = 40) {
     container.appendChild(div);
   });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  startButton.addEventListener("click", () => {
+    startScreen.style.display = "none";
+    gameScreenOne.style.display = "flex";
+    gameScreenOne.style.opacity = "1";
+    gameScreenOne.style.pointerEvents = "auto";
+    fillWithEmojis(40);
+    updatedStats();
+  });
+});
 
 // now after user complated the page one now its time for page 2
 // on the page two
@@ -125,7 +135,7 @@ function goToPuzzelThree() {
   const btn = document.querySelectorAll(".color-btn");
   const sequence = [];
   let userSequence = [];
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 4; i++) {
     const rendColor = colors[Math.floor(Math.random() * colors.length)];
     sequence.push(rendColor);
   }
@@ -144,13 +154,13 @@ function goToPuzzelThree() {
 
       setTimeout(() => {
         button.classList.remove("flash");
-      }, 2000); // how long it stays visible
-    }, index * 1000); // how long to wait before next flash
+      }, 200); // how long it stays visible
+    }, index * 100); // how long to wait before next flash
   });
   setTimeout(() => {
     display.textContent = "Your turn! Repeat the sequence.";
     btn.forEach((b) => (b.disabled = false));
-  }, sequence.length * 1200);
+  }, sequence.length * 100);
   btn.forEach((button) => {
     button.addEventListener("click", () => {
       const clickedColor = button.dataset.color;
@@ -180,13 +190,66 @@ function goToPuzzelThree() {
   console.log("👀 Full color sequence to win:", sequence);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  startButton.addEventListener("click", () => {
-    startScreen.style.display = "none";
-    gameScreenOne.style.display = "flex";
-    gameScreenOne.style.opacity = "1";
-    gameScreenOne.style.pointerEvents = "auto";
-    fillWithEmojis(40);
-    updatedStats();
-  });
-});
+
+
+const riddles = [
+  {
+    question: "I can bring back the dead, make us cry, make us laugh, make us young. Born in an instant, yet last a lifetime. What am I?",
+    answer: "a memory"
+  },
+  {
+    question: "I can be cracked, made, told, and played. What am I?",
+    answer: "a joke"
+  },
+  {
+    question: "It makes you weak and strong... not seen, only felt — and often lost. What is it?",
+    answer: "love"
+  },
+  {
+    question: "The more you take, the more you leave behind. What am I?",
+    answer: "footsteps"
+  },
+  {
+    question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+    answer: "an echo"
+  }
+];
+
+let currentRiddleIndex = 0;
+
+function displayRiddle() {
+  document.getElementById("riddle-question").textContent = riddles[currentRiddleIndex].question;
+  document.getElementById("riddle-count").textContent = currentRiddleIndex + 1;
+}
+
+function checkAnswer() {
+  const userAnswer = document.getElementById("riddle-answer").value.toLowerCase().trim();
+  const feedback = document.getElementById("riddle-feedback");
+
+  if (userAnswer === riddles[currentRiddleIndex].answer) {
+    feedback.textContent = "✅ Well done! Move on!";
+    feedback.style.color = "limegreen";
+    currentRiddleIndex++;
+    points += 2
+    updatedStats()
+    loseLifeOrUsepoints()
+    if (currentRiddleIndex < riddles.length) {
+      setTimeout(() => {
+        document.getElementById("riddle-answer").value = "";
+        feedback.textContent = "";
+        displayRiddle();
+      }, 1000);
+    } else {
+      feedback.textContent = "🎉 All riddles complete!";
+      feedback.style.color = "gold";
+    }
+
+  } else {
+    feedback.textContent = "❌ Try again!";
+    feedback.style.color = "red";
+    loseLifeOrUsepoints();
+  }
+}
+
+document.getElementById("submit-riddle-answer").addEventListener("click", checkAnswer);
+displayRiddle();
