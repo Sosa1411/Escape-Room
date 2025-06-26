@@ -12,7 +12,6 @@ function updatedStats() {
   document.getElementById("lives").textContent = `lives: ${lives}`;
 }
 let usedPointsAlredy = false;
-
 function loseLifeOrUsepoints() {
   if (lives <= 0 && usedPointsAlredy) return;
   lives--;
@@ -114,7 +113,6 @@ function goToPuzzelTwo() {
       feedBack.textContent = "✅ Correct!";
       feedBack.style.color = "green";
       points += 10;
-      updatedStats();
       setTimeout(() => {
         gameScreenTwo.style.display = "none";
         gameScreenThree.style.display = "flex";
@@ -190,49 +188,53 @@ function goToPuzzelThree() {
   console.log("👀 Full color sequence to win:", sequence);
 }
 
-
-
 const riddles = [
   {
-    question: "I can bring back the dead, make us cry, make us laugh, make us young. Born in an instant, yet last a lifetime. What am I?",
-    answer: "a memory"
+    question:
+      "I can bring back the dead, make us cry, make us laugh, make us young. Born in an instant, yet last a lifetime. What am I?",
+    answer: "memory",
   },
   {
     question: "I can be cracked, made, told, and played. What am I?",
-    answer: "a joke"
+    answer: "joke",
   },
   {
-    question: "It makes you weak and strong... not seen, only felt — and often lost. What is it?",
-    answer: "love"
+    question:
+      "I can make you weak and strong... not seen, only felt — and often lost. What am I?",
+    answer: "love",
   },
   {
     question: "The more you take, the more you leave behind. What am I?",
-    answer: "footsteps"
+    answer: "footsteps",
   },
   {
-    question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
-    answer: "an echo"
-  }
+    question:
+      "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+    answer: "an echo",
+  },
 ];
 
 let currentRiddleIndex = 0;
 
 function displayRiddle() {
-  document.getElementById("riddle-question").textContent = riddles[currentRiddleIndex].question;
+  document.getElementById("riddle-question").textContent =
+    riddles[currentRiddleIndex].question;
   document.getElementById("riddle-count").textContent = currentRiddleIndex + 1;
 }
 
 function checkAnswer() {
-  const userAnswer = document.getElementById("riddle-answer").value.toLowerCase().trim();
+  const userAnswer = document
+    .getElementById("riddle-answer")
+    .value.toLowerCase()
+    .trim();
   const feedback = document.getElementById("riddle-feedback");
 
   if (userAnswer === riddles[currentRiddleIndex].answer) {
     feedback.textContent = "✅ Well done! Move on!";
     feedback.style.color = "limegreen";
     currentRiddleIndex++;
-    points += 2
+    points += 2;
     updatedStats()
-    loseLifeOrUsepoints()
     if (currentRiddleIndex < riddles.length) {
       setTimeout(() => {
         document.getElementById("riddle-answer").value = "";
@@ -240,10 +242,12 @@ function checkAnswer() {
         displayRiddle();
       }, 1000);
     } else {
-      feedback.textContent = "🎉 All riddles complete!";
-      feedback.style.color = "gold";
+      setTimeout(() => {
+        gameScreenFour.style.display = "none";
+        gameScreenFive.style.display = "flex";
+        goToPuzzelFive();
+      }, 1500);
     }
-
   } else {
     feedback.textContent = "❌ Try again!";
     feedback.style.color = "red";
@@ -251,5 +255,157 @@ function checkAnswer() {
   }
 }
 
-document.getElementById("submit-riddle-answer").addEventListener("click", checkAnswer);
+document
+  .getElementById("submit-riddle-answer")
+  .addEventListener("click", checkAnswer);
 displayRiddle();
+
+//drag start
+// drag over
+// drop logic
+// mathcing by data- match
+let gameOver = false;
+function goToPuzzelFive(){
+  const draggable = document.querySelectorAll(".draggable");
+  const dropZones = document.querySelectorAll(".dropzone");
+  const feedback = document.getElementById("drag-feedback");
+  let draggedItems = null;
+  let timeleft = 10;
+  let timerInterval = null;
+  function startTimer() {
+  clearInterval(timerInterval);
+  timeleft = 10;
+  document.getElementById("timer").textContent = `⏱ Time Left: ${timeleft}s`;
+
+  timerInterval = setInterval(() => {
+    if (gameOver) {
+      clearInterval(timerInterval);
+      return;
+    }
+
+    timeleft--;
+    document.getElementById("timer").textContent = `⏱ Time Left: ${timeleft}s`;
+
+    if (timeleft <= 0) {
+      clearInterval(timerInterval);
+      feedback.textContent = "⏰ Time's up! -1 life!";
+      feedback.style.color = "red";
+      loseLifeOrUsepoints();
+      if (!gameOver) startTimer(); // safe restart
+    }
+  }, 1000);
+}
+
+  draggable.forEach((item) => {
+    item.addEventListener("dragstart", () => {
+      draggedItems = item;
+    });
+  });
+  let correctMatches = 0;
+  dropZones.forEach((zone) => {
+    zone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      zone.classList.add("hovered");
+    });
+    zone.addEventListener("dragleave", () => {
+      zone.classList.remove("hovered")
+    });
+    zone.addEventListener("drop", () => {
+      zone.classList.remove("hovered");
+      const draggMatch = draggedItems.getAttribute("data-match");
+      const dropMatch = zone.getAttribute("data-match");
+      if (draggMatch === dropMatch){
+        startTimer()
+        zone.textContent = `✅ ${draggedItems.textContent}`;
+        zone.style.backgroundColor = "#c8f7c5";
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        points += 5
+        updatedStats();
+        draggedItems.remove();
+        correctMatches++
+        if (correctMatches === 6){
+        setTimeout(() => {
+        feedback.textContent = "🎉 You did it! Final room complete!";
+        feedback.style.color = "gold"
+        showFinalVictory();
+        }, 1000)
+        }
+      } else {
+          feedback.textContent = "❌ Wrong match! -1 life";
+          feedback.style.color = "red";
+          loseLifeOrUsepoints();
+        }
+    })
+  })
+  startTimer()
+  setInterval(() => {
+  dropZones.forEach((zone) => {
+    const randomX = Math.floor(Math.random() * 80);
+    const randomY = Math.floor(Math.random() * 200);
+    zone.style.left = `${randomX}vw`;
+    zone.style.top = `${randomY}px`;
+  });
+}, 2000);
+}
+
+
+function showFinalVictory() {
+  gameOver = true;
+  const body = document.body;
+
+  // Explosion background
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = "100vw";
+  overlay.style.height = "100vh";
+  overlay.style.background = "radial-gradient(circle, #000 30%, #ff0000 100%)";
+  overlay.style.display = "flex";
+  overlay.style.flexDirection = "column";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.zIndex = "10000";
+  overlay.style.color = "white";
+  overlay.style.fontSize = "32px";
+  overlay.style.fontWeight = "bold";
+  overlay.style.textShadow = "0 0 10px red";
+  overlay.style.animation = "blowup 1s ease-out";
+
+  overlay.innerHTML = `
+    <h1>💥 YOU BEAT THE FINAL BOSS 💥</h1>
+    <p>Total Points: ${points}</p>
+    <button onclick="location.reload()" style="padding: 12px 24px; font-size: 18px; margin-top: 20px; cursor: pointer;">🔁 Play Again</button>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // Add confetti script dynamically
+  const script = document.createElement("script");
+  script.src = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+  script.onload = () => {
+    const duration = 5 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      window.confetti({
+        particleCount: 5,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 }
+      });
+      window.confetti({
+        particleCount: 5,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 }
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  };
+  document.body.appendChild(script);
+}

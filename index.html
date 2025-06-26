@@ -1,100 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Find the elephant in the room</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <div id="start-screen">
-      <div id="start-screen-content">
-        <h2>Are you ready?</h2>
-        <button id="start-button">Yes</button>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find the elephant in the room</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div id="start-screen">
+    <div id="start-screen-content">
+      <h2>Are you ready?</h2>
+      <button id="start-button">Yes</button>
     </div>
-    <div id="game-points">
-      <p id="points">Points: 0</p>
-      <p id="lives">Lives: 4</p>
+  </div>
+  <div id="game-points">
+    <p id="points">Points: 0</p>
+    <p id="lives">Lives: 4</p>
+  </div>
+  <div id="game-screen-one">
+    <h1>Find the elephant 🐘</h1>
+    <div id="box-of-animals"></div>
+  </div>
+  <div id="game-screen-two">
+    <h2>🔒 Enter the secret code to unlock the box</h2>
+    <input id="code-input" type="text" maxlength="4" placeholder="4-digit code" />
+    <button id="submit-code">Unlock</button>
+    <p id="code-feedback"></p>
+  </div>
+  <div id="game-screen-three" class="game-screen" style="display: none">
+    <h2>🧠 Memorize the Color Sequence</h2>
+    <!-- Display the sequence here -->
+    <div id="color-sequence" class="sequence-display">
+      <!-- JS will flash colors here -->
     </div>
-    <div id="game-screen-one">
-      <h1>Find the elephant 🐘</h1>
-      <div id="box-of-animals"></div>
+    <p id="sequence-instruction">
+      Watch the sequence, then repeat it in the same order!
+    </p>
+    <!-- User's input buttons -->
+    <div id="color-buttons" class="button-group">
+      <button class="color-btn" data-color="red" style="background: red" aria-label="Red-button"></button>
+      <button class="color-btn" data-color="blue" style="background: blue" aria-label="blue-button"></button>
+      <button class="color-btn" data-color="green" style="background: green" aria-label="green-button"></button>
+      <button class="color-btn" data-color="yellow" style="background: yellow" aria-label="yellow-button"></button>
+      <button class="color-btn" data-color="yellow" style="background: rgb(100, 47, 59)"
+        aria-label="yellow-button"></button>
+      <button class="color-btn" data-color="yellow" style="background: rgb(0, 255, 242)"
+        aria-label="yellow-button"></button>
     </div>
-    <div id="game-screen-two">
-      <h2>🔒 Enter the secret code to unlock the box</h2>
-      <input
-        id="code-input"
-        type="text"
-        maxlength="4"
-        placeholder="4-digit code"
-      />
-      <button id="submit-code">Unlock</button>
-      <p id="code-feedback"></p>
+    <!-- Feedback -->
+    <p id="sequence-feedback"></p>
+  </div>
+
+  <div id="game-screen-four" style="display: none;">
+    <h2 class="riddle-title">🧩 Riddle Challenge</h2>
+    <div id="riddle-box">
+      <p id="riddle-question">Riddle will appear here...</p>
+      <input type="text" id="riddle-answer" placeholder="Type your answer..." />
+      <button id="submit-riddle-answer">Submit Answer</button>
+      <p id="riddle-feedback"></p>
+      <p id="riddle-progress">Riddle <span id="riddle-count">1</span>/5</p>
     </div>
-    <div id="game-screen-three" class="game-screen" style="display: none">
-      <h2>🧠 Memorize the Color Sequence</h2>
-      <!-- Display the sequence here -->
-      <div id="color-sequence" class="sequence-display">
-        <!-- JS will flash colors here -->
-      </div>
-      <p id="sequence-instruction">
-        Watch the sequence, then repeat it in the same order!
-      </p>
-      <!-- User's input buttons -->
-      <div id="color-buttons" class="button-group">
-        <button
-          class="color-btn"
-          data-color="red"
-          style="background: red"
-          aria-label="Red-button"
-        ></button>
-        <button
-          class="color-btn"
-          data-color="blue"
-          style="background: blue"
-          aria-label="blue-button"
-        ></button>
-        <button
-          class="color-btn"
-          data-color="green"
-          style="background: green"
-          aria-label="green-button"
-        ></button>
-        <button
-          class="color-btn"
-          data-color="yellow"
-          style="background: yellow"
-          aria-label="yellow-button"
-        ></button>
-        <button
-          class="color-btn"
-          data-color="yellow"
-          style="background: rgb(100, 47, 59)"
-          aria-label="yellow-button"
-        ></button>
-        <button
-          class="color-btn"
-          data-color="yellow"
-          style="background: rgb(0, 255, 242)"
-          aria-label="yellow-button"
-        ></button>
-      </div>
-      <!-- Feedback -->
-      <p id="sequence-feedback"></p>
-    </div>
-    
-    <div id="game-screen-four" style="display: none;">
-      <h2 class="riddle-title">🧩 Riddle Challenge</h2>
-      <div id="riddle-box">
-    <p id="riddle-question">Riddle will appear here...</p>
-    <input type="text" id="riddle-answer" placeholder="Type your answer..." />
-    <button id="submit-riddle-answer">Submit Answer</button>
-    <p id="riddle-feedback"></p>
-    <p id="riddle-progress">Riddle <span id="riddle-count">1</span>/5</p>
-    </div>
-    </div>
-    <div id="game-screen-five"></div>
-    <script src="index.js"></script>
-  </body>
+  </div>
+  <div id="game-screen-five" style="display: none; flex-direction: column; align-items: center;">
+  <h2>🧩 Final Puzzle: Match the Items!</h2>
+  <p>Drag the items to the correct boxes</p>
+  <p id="timer" style="font-size: 18px; font-weight: bold;">⏱ Time Left: 10s</p>
+  <div class="drag-area">
+    <div class="draggable" draggable="true" data-match="1">🍎 Apple</div>
+    <div class="draggable" draggable="true" data-match="2">🚗 Car</div>
+    <div class="draggable" draggable="true" data-match="3">🐶 Dog</div>
+    <div class="draggable" draggable="true" data-match="4">📚 Book</div>
+    <div class="draggable" draggable="true" data-match="5">🌳 Tree</div>
+    <div class="draggable" draggable="true" data-match="6">⚽ Ball</div>
+  </div>
+  <div class="drop-area">
+    <div class="dropzone" data-match="2">Drop the Car here</div>
+    <div class="dropzone" data-match="5">Drop the Tree here</div>
+    <div class="dropzone" data-match="4">Drop the Book here</div>
+    <div class="dropzone" data-match="3">Drop the Dog here</div>
+    <div class="dropzone" data-match="6">Drop the Ball here</div>
+    <div class="dropzone" data-match="1">Drop the Apple here</div>
+  </div>
+  <p id="drag-feedback" style="font-weight: bold; font-size: 18px; margin-top: 10px;"></p>
+
+  </div>
+  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"></canvas>
+
+  <script src="index.js"></script>
+</body>
+
 </html>
