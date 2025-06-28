@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     gameScreenOne.style.display = "flex";
     gameScreenOne.style.opacity = "1";
     gameScreenOne.style.pointerEvents = "auto";
-    fillWithEmojis(40);
+    fillWithEmojis(700);
     updatedStats();
   });
 });
@@ -106,7 +106,9 @@ function goToPuzzelTwo() {
   const inputId = document.getElementById("code-input");
   const submitBtn = document.getElementById("submit-code");
   const feedBack = document.getElementById("code-feedback");
+  const hintTxt = document.getElementById("hint-text");
   const rightCode = "2123";
+  let failedAttempt = 0
   submitBtn.addEventListener("click", () => {
     const userGuess = inputId.value;
     if (userGuess === rightCode) {
@@ -119,9 +121,13 @@ function goToPuzzelTwo() {
         goToPuzzelThree();
       }, 25);
     } else {
+      failedAttempt++
       feedBack.textContent = "❌ Wrong code, try again!";
       feedBack.style.color = "red";
       loseLifeOrUsepoints();
+    }
+    if (failedAttempt === 4){
+      document.getElementById("hint-text").style.display = "block"
     }
   });
 }
@@ -258,7 +264,7 @@ function checkAnswer() {
 document
   .getElementById("submit-riddle-answer")
   .addEventListener("click", checkAnswer);
-displayRiddle();
+  displayRiddle();
 
 //drag start
 // drag over
@@ -297,8 +303,10 @@ function goToPuzzelFive(){
 }
 
   draggable.forEach((item) => {
-    item.addEventListener("dragstart", () => {
+    item.addEventListener("dragstart", (e) => {
       draggedItems = item;
+      e.dataTransfer.setData("text/plain", item.getAttribute("data-match"));
+      e.dataTransfer.setData("text/content", item.textContent);
     });
   });
   let correctMatches = 0;
@@ -310,21 +318,24 @@ function goToPuzzelFive(){
     zone.addEventListener("dragleave", () => {
       zone.classList.remove("hovered")
     });
-    zone.addEventListener("drop", () => {
+    zone.addEventListener("drop", (e) => {
+      e.preventDefault();
       zone.classList.remove("hovered");
-      const draggMatch = draggedItems.getAttribute("data-match");
-      const dropMatch = zone.getAttribute("data-match");
+      const draggMatch = e.dataTransfer.getData("text/plain");
+      const draggText = e.dataTransfer.getData("text/content")
+      const dropMatch = zone.getAttribute("data-match")
       if (draggMatch === dropMatch){
         startTimer()
-        zone.textContent = `✅ ${draggedItems.textContent}`;
+        zone.textContent = `✅ ${draggText}`;
         zone.style.backgroundColor = "#c8f7c5";
         feedback.textContent = "✅ Correct!";
         feedback.style.color = "green";
         points += 5
         updatedStats();
-        draggedItems.remove();
+        const draggedElement = document.querySelector(`.draggable[data-match="${draggMatch}"]`);
+        if (draggedElement)draggedElement.remove();
         correctMatches++
-        if (correctMatches === 6){
+        if (correctMatches === 8){
         setTimeout(() => {
         feedback.textContent = "🎉 You did it! Final room complete!";
         feedback.style.color = "gold"
@@ -410,5 +421,12 @@ function showFinalVictory() {
   document.body.appendChild(script);
 }
 
+function init(){
+  if (gameScreenFour.style.display === "flex"){
+    displayRiddle();
+  }if (gameScreenFive.style.display === "flex"){
+    goToPuzzelFive();
+  }
+}
 
-
+init()

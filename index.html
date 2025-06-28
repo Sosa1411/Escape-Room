@@ -26,6 +26,9 @@
   <div id="game-screen-two">
     <h2>🔒 Enter the secret code to unlock the box</h2>
     <input id="code-input" type="text" maxlength="4" placeholder="4-digit code" />
+    <p id="hint-text" style="display: none; color: orange; font-style: italic;">
+      Hint: The code is 21..
+    </p>
     <button id="submit-code">Unlock</button>
     <p id="code-feedback"></p>
   </div>
@@ -64,29 +67,34 @@
     </div>
   </div>
   <div id="game-screen-five" style="display: none; flex-direction: column; align-items: center;">
-  <h2>🧩 Final Puzzle: Match the Items!</h2>
-  <p>Drag the items to the correct boxes</p>
-  <p id="timer" style="font-size: 18px; font-weight: bold;">⏱ Time Left: 10s</p>
-  <div class="drag-area">
-    <div class="draggable" draggable="true" data-match="1">🍎 Apple</div>
-    <div class="draggable" draggable="true" data-match="2">🚗 Car</div>
-    <div class="draggable" draggable="true" data-match="3">🐶 Dog</div>
-    <div class="draggable" draggable="true" data-match="4">📚 Book</div>
-    <div class="draggable" draggable="true" data-match="5">🌳 Tree</div>
-    <div class="draggable" draggable="true" data-match="6">⚽ Ball</div>
-  </div>
-  <div class="drop-area">
-    <div class="dropzone" data-match="2">Drop the Car here</div>
-    <div class="dropzone" data-match="5">Drop the Tree here</div>
-    <div class="dropzone" data-match="4">Drop the Book here</div>
-    <div class="dropzone" data-match="3">Drop the Dog here</div>
-    <div class="dropzone" data-match="6">Drop the Ball here</div>
-    <div class="dropzone" data-match="1">Drop the Apple here</div>
-  </div>
-  <p id="drag-feedback" style="font-weight: bold; font-size: 18px; margin-top: 10px;"></p>
+    <h2>🧩 Final Puzzle: Match the Items!</h2>
+    <p>Drag the items to the correct boxes</p>
+    <p id="timer" style="font-size: 18px; font-weight: bold;">⏱ Time Left: 10s</p>
+    <div class="drag-area">
+      <div class="draggable" draggable="true" data-match="1">🍎 Apple</div>
+      <div class="draggable" draggable="true" data-match="2">🚗 Car</div>
+      <div class="draggable" draggable="true" data-match="3">🐶 Dog</div>
+      <div class="draggable" draggable="true" data-match="4">📚 Book</div>
+      <div class="draggable" draggable="true" data-match="5">🌳 Tree</div>
+      <div class="draggable" draggable="true" data-match="6">⚽ Ball</div>
+      <div class="draggable" draggable="true" data-match="7">🐈 Cat</div>
+      <div class="draggable" draggable="true" data-match="8">🐁 Mouse</div>
+    </div>
+    <div class="drop-area">
+      <div class="dropzone" data-match="2">Drop the Car here</div>
+      <div class="dropzone" data-match="5">Drop the Tree here</div>
+      <div class="dropzone" data-match="4">Drop the Book here</div>
+      <div class="dropzone" data-match="3">Drop the Dog here</div>
+      <div class="dropzone" data-match="6">Drop the Ball here</div>
+      <div class="dropzone" data-match="8">Drop the Mouse here</div>
+      <div class="dropzone" data-match="1">Drop the Apple here</div>
+      <div class="dropzone" data-match="7">Drop the Cat here</div>
+    </div>
+    <p id="drag-feedback" style="font-weight: bold; font-size: 18px; margin-top: 10px;"></p>
 
   </div>
-  <canvas id="confetti-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"></canvas>
+  <canvas id="confetti-canvas"
+    style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;"></canvas>
 
   <script src="index.js"></script>
 </body>
