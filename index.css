@@ -164,6 +164,25 @@ body {
   font-size: 20px;
   min-height: 30px;
 }
+#hint-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #ffc107;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#hint-button:hover {
+  background-color: #e0a800;
+}
+
+#hint-text {
+  margin-top: 10px;
+  color: orange;
+  font-style: italic;
+}
+
 
 #game-screen-three {
   display: flex;
