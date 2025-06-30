@@ -139,7 +139,7 @@ function goToPuzzelThree() {
   const btn = document.querySelectorAll(".color-btn");
   const sequence = [];
   let userSequence = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     const rendColor = colors[Math.floor(Math.random() * colors.length)];
     sequence.push(rendColor);
   }
@@ -158,8 +158,8 @@ function goToPuzzelThree() {
 
       setTimeout(() => {
         button.classList.remove("flash");
-      }, 200); // how long it stays visible
-    }, index * 100); // how long to wait before next flash
+      }, 500); // how long it stays visible
+    }, index * 200); // how long to wait before next flash
   });
   setTimeout(() => {
     display.textContent = "Your turn! Repeat the sequence.";
@@ -215,7 +215,7 @@ const riddles = [
   },
   {
     question:
-      "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+      "I can speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
     answer: "an echo",
   },
 ];
