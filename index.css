@@ -1,3 +1,5 @@
+
+
 * {
   margin: 0;
   padding: 0;
@@ -62,6 +64,7 @@ body {
   background-position: center;
   cursor: pointer;
 }
+
 #game-points {
   position: fixed;
   top: 15px;
